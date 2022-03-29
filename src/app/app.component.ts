@@ -18,12 +18,12 @@ export class AppComponent {
 
 
   imageCropped(event: CroppedEvent) {
-    console.log('1')
+    console.log('a')
     this.base64 = event.base64;
   }
 
   getImage(image: any): void {
-    console.log('2')
+    console.log('b')
     this.base64 = image.url;
   }
 

@@ -23,7 +23,7 @@
   border: none;
 }
 
- svg {
+.ngx-photo-editor-icons-container > svg {
   cursor: pointer;
   margin-right: 15px;
   transition: fill 0.5s;
@@ -31,15 +31,26 @@
   height: 20px;
   fill: white;
 }
-
+.background_label > svg {
+  cursor: pointer;
+  margin-right: 15px;
+  transition: fill 0.5s;
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
 .ngx-photo-editor-icons-container > svg:last-child {
   margin-right: 0;
 }
+
+.ngx-photo-editor-icons-container > svg:hover {
+  fill: black;
+}
+.background_label > svg:hover {
+  fill: black;
+}
 #background {
   display: none;
-}
- svg:hover {
-  fill: black;
 }
 
 .ngx-photo-editor-custom-modal-footer {
