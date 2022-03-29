@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {CroppedEvent} from "picsart-image-editor";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'image-editor-picsart';
+  base64: any;
+  imageChangedEvent: any;
+  imageUrl: any;
+  api = 'tZcPbiBMqiCjoX0GKF8lb6TCRP3Y7TGx';
+  picsartUrl = 'https://api.picsart.io/tools/demo/removebg';
+  fileChangeEvent(event: any) {
+    this.imageChangedEvent = event;
+  }
+
+
+  imageCropped(event: CroppedEvent) {
+    console.log('1')
+    this.base64 = event.base64;
+  }
+
+  getImage(image: any): void {
+    console.log('2')
+    this.base64 = image.url;
+  }
+
+
+  constructor() {}
+
+
+
 }

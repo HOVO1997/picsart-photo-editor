@@ -24,9 +24,15 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
+              "src/theme.less",
               "src/styles.css"
             ],
             "scripts": []
@@ -97,6 +103,37 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        }
+      }
+    },
+    "picsart-image-editor": {
+      "projectType": "library",
+      "root": "projects/picsart-image-editor",
+      "sourceRoot": "projects/picsart-image-editor/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/picsart-image-editor/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/picsart-image-editor/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/picsart-image-editor/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/picsart-image-editor/src/test.ts",
+            "tsConfig": "projects/picsart-image-editor/tsconfig.spec.json",
+            "karmaConfig": "projects/picsart-image-editor/karma.conf.js"
           }
         }
       }
