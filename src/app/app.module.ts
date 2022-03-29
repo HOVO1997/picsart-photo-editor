@@ -17,8 +17,8 @@ registerLocaleData(en);
     AppComponent
   ],
     imports: [
-        BrowserModule,
-        PicsartImageEditorModule,
+      BrowserModule,
+      PicsartImageEditorModule,
       BrowserAnimationsModule,
       FormsModule,
       HttpClientModule,
