@@ -207,7 +207,7 @@ export class PicsartImageEditorComponent implements OnInit{
     this.cropper.reset();
   }
 
-  export(arg: string): any {
+  export(arg: string, emitType: string): any {
     let cropedImage;
     if (this.resizeToWidth && this.resizeToHeight) {
       cropedImage = this.cropper.getCroppedCanvas({
@@ -235,10 +235,12 @@ export class PicsartImageEditorComponent implements OnInit{
     }
     this.outputImage = cropedImage.toDataURL('image/' + this.format, this.quality);
     cropedImage.toBlob((blob: any) => {
-      this.imageCropped.emit({
-        base64: this.outputImage,
-        file: new File([blob], Date.now() + '.' + this.format, {type: 'image/' + this.format})
-      });
+      if (emitType === 'withEmit') {
+        this.imageCropped.emit({
+          base64: this.outputImage,
+          file: new File([blob], Date.now() + '.' + this.format, {type: 'image/' + this.format})
+        });
+      }
     }, 'image/' + this.format, this.quality / 100);
     this.imageLoaded = false;
     if (arg === 'changeBG') {
@@ -277,12 +279,12 @@ export class PicsartImageEditorComponent implements OnInit{
   }
 
   passBack() {
-    this.export('img');
+    this.export('img', 'withEmit');
     this.isVisible = false;
   }
 
   private picsartBGChange(): void {
-    const image = this.export('changeBG');
+    const image = this.export('changeBG', 'withoutEmit');
     const file = this.DataURIToBlob(image);
     this.imageLoaded = false;
     this.data.append('image', file, 'image.jpg');

@@ -18,7 +18,7 @@ export class AppComponent {
 
 
   imageCropped(event: CroppedEvent) {
-    console.log('a')
+    console.log(event)
     this.base64 = event.base64;
   }
 
