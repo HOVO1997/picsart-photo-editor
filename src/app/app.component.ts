@@ -22,10 +22,7 @@ export class AppComponent {
     this.base64 = event.base64;
   }
 
-  getImage(image: any): void {
-    console.log('b')
-    this.base64 = image.url;
-  }
+
 
 
   constructor() {}

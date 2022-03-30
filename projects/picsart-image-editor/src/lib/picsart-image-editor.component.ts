@@ -45,7 +45,6 @@ export class PicsartImageEditorComponent implements OnInit{
   @Input() resizeToHeight!: number;
   @Input() imageSmoothingEnabled = true;
   @Input() imageSmoothingQuality: ImageSmoothingQuality = 'high';
-  @Output() sendCroppedImage = new EventEmitter();
   @Input() picsartApiKey!: string;
   @Input() picsartUrl!: string;
   url!: string;
@@ -111,19 +110,19 @@ export class PicsartImageEditorComponent implements OnInit{
 
   @Input() set imageChangedEvent(event: any) {
     if (event) {
-      this.imageUrl = event;
+      // this.imageUrl = event;
       // Before update
-      // const file = event.target.files[0];
-      // if (file && (/\.(gif|jpe?g|tiff|png|webp|bmp)$/i).test(file.name)) {
-      //   if (!this.isFormatDefined) {
-      //     this.format = event.target.files[0].type.split('/')[1];
-      //   }
-      //   const reader = new FileReader();
-      //   reader.onload = (ev: any) => {
-      //     this.imageUrl = ev.target.result;
-      //   };
-      //   reader.readAsDataURL(event.target.files[0]);
-      // }
+      const file = event.target.files[0];
+      if (file && (/\.(gif|jpe?g|tiff|png|webp|bmp)$/i).test(file.name)) {
+        if (!this.isFormatDefined) {
+          this.format = event.target.files[0].type.split('/')[1];
+        }
+        const reader = new FileReader();
+        reader.onload = (ev: any) => {
+          this.imageUrl = ev.target.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+      }
     }
   }
 
@@ -295,7 +294,6 @@ export class PicsartImageEditorComponent implements OnInit{
       this.data.append('bg_image', '');
     }
     this.ngxPhotoEditorService.picsartBackgroundChange(this.data, this.picsartApiKey, this.picsartUrl).subscribe(response => {
-      this.sendCroppedImage.emit(response.data);
       this.cacheImg = response.data.url;
       setTimeout(() => {
         this.cropper.destroy();
