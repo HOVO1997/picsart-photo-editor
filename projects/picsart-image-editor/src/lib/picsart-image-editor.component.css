@@ -370,10 +370,14 @@
   cursor: not-allowed;
 }
 .loader {
+  width: 100%;
+  height: 84%;
+  align-items: center;
+  text-align: center;
   position: absolute;
   z-index: 9999;
-  background: #8F8F8F;
-  top: 0;
+  background: #8f8f8fe0;
+  top: 54px;
   left: 0;
 }
 :root {

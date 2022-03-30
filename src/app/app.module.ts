@@ -9,6 +9,8 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import {NzUploadModule} from "ng-zorro-antd/upload";
+import {NzIconModule} from "ng-zorro-antd/icon";
 
 registerLocaleData(en);
 
@@ -16,13 +18,15 @@ registerLocaleData(en);
   declarations: [
     AppComponent
   ],
-    imports: [
-      BrowserModule,
-      PicsartImageEditorModule,
-      BrowserAnimationsModule,
-      FormsModule,
-      HttpClientModule,
-    ],
+  imports: [
+    BrowserModule,
+    PicsartImageEditorModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule,
+    NzUploadModule,
+    NzIconModule,
+  ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
 })

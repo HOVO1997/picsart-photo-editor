@@ -13,6 +13,9 @@ export class PicsartImageEditorComponent implements OnInit{
   isVisible = false;
   @ViewChild('ngxPhotoEditorContent', {static: false}) content: any;
   @ViewChild('colorPicker') colorPicker!: ElementRef;
+  @ViewChild('cache') cacheImage!: ElementRef;
+  @ViewChild('image') baseImage!: ElementRef;
+  public cacheImg: any;
   public type!: string;
   public cropper!: Cropper;
   public outputImage!: string;
@@ -109,6 +112,7 @@ export class PicsartImageEditorComponent implements OnInit{
   @Input() set imageChangedEvent(event: any) {
     if (event) {
       this.imageUrl = event;
+      // Before update
       // const file = event.target.files[0];
       // if (file && (/\.(gif|jpe?g|tiff|png|webp|bmp)$/i).test(file.name)) {
       //   if (!this.isFormatDefined) {
@@ -161,11 +165,11 @@ export class PicsartImageEditorComponent implements OnInit{
   }
 
   rotateRight() {
-    this.cropper.rotate(45);
+    this.cropper.rotate(25);
   }
 
   rotateLeft() {
-    this.cropper.rotate(-45);
+    this.cropper.rotate(-25);
   }
 
   crop() {
@@ -199,6 +203,8 @@ export class PicsartImageEditorComponent implements OnInit{
   }
 
   reset() {
+    this.cropper.destroy();
+    this.cropper = new Cropper(this.baseImage.nativeElement);
     this.cropper.reset();
   }
 
@@ -262,33 +268,42 @@ export class PicsartImageEditorComponent implements OnInit{
 
   onBackgroundUpload(event: any): void {
     this.data.append('bg_image', event.target.files[0], event.target.files[0].name);
+    this.picsartBGChange();
   }
 
   onColorUpload(event: any): void {
     this.colorPicker.nativeElement.style['background-color'] = event.target.value;
     this.data.append('bg_color', event.target.value);
+    this.picsartBGChange();
   }
 
   passBack() {
-    if (this.type) {
-      const image = this.export('changeBG');
-      const file = this.DataURIToBlob(image);
-      this.data.append('image', file, 'image.jpg');
-      if (this.type === 'background') {
-        this.data.delete('bg_color');
-        this.data.append('bg_color', '#000000');
-      } else {
-        this.data.delete('bg_image');
-        this.data.append('bg_image', '');
-      }
-      this.ngxPhotoEditorService.picsartBackgroundChange(this.data, this.picsartApiKey, this.picsartUrl).subscribe(res => {
-        this.isVisible = false;
-        this.sendCroppedImage.emit(res.data);
-      });
-    }else{
-      this.export('img');
-      this.isVisible = false;
+    this.export('img');
+    this.isVisible = false;
+  }
+
+  private picsartBGChange(): void {
+    const image = this.export('changeBG');
+    const file = this.DataURIToBlob(image);
+    this.imageLoaded = false;
+    this.data.append('image', file, 'image.jpg');
+    if (this.type === 'background') {
+      this.data.delete('bg_color');
+      this.data.append('bg_color', '#000000');
+    } else {
+      this.data.delete('bg_image');
+      this.data.append('bg_image', '');
     }
+    this.ngxPhotoEditorService.picsartBackgroundChange(this.data, this.picsartApiKey, this.picsartUrl).subscribe(response => {
+      this.sendCroppedImage.emit(response.data);
+      this.cacheImg = response.data.url;
+      setTimeout(() => {
+        this.cropper.destroy();
+        this.cropper = new Cropper(this.cacheImage.nativeElement);
+        this.imageLoaded = true;
+      }, 0);
+    });
+    this.type = '';
   }
 
   private DataURIToBlob(dataURI: string) {

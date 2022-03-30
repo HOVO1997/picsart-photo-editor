@@ -1,5 +1,5 @@
 {
-  "name": "picsart-editor",
+  "name": "ngx-image-editor-picsart",
   "version": "0.0.1",
   "license": "MIT",
   "peerDependencies": {
