@@ -22,7 +22,9 @@ export class AppComponent {
     this.base64 = event.base64;
   }
 
-
+  onClose(event: boolean): void {
+    console.log(event)
+  }
 
 
   constructor() {}

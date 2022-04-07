@@ -58,6 +58,8 @@ export class PicsartImageEditorComponent implements OnInit{
   @Output() imageCropped = new EventEmitter<CroppedEvent>();
   imageLoaded = false;
 
+  @Output() onClose = new EventEmitter<boolean>();
+
   constructor(
     private ngxPhotoEditorService: PicsartImageEditorService,
   ) {
@@ -110,19 +112,19 @@ export class PicsartImageEditorComponent implements OnInit{
 
   @Input() set imageChangedEvent(event: any) {
     if (event) {
-      // this.imageUrl = event;
+      this.imageUrl = event;
       // Before update
-      const file = event.target.files[0];
-      if (file && (/\.(gif|jpe?g|tiff|png|webp|bmp)$/i).test(file.name)) {
-        if (!this.isFormatDefined) {
-          this.format = event.target.files[0].type.split('/')[1];
-        }
-        const reader = new FileReader();
-        reader.onload = (ev: any) => {
-          this.imageUrl = ev.target.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
-      }
+      // const file = event.target.files[0];
+      // if (file && (/\.(gif|jpe?g|tiff|png|webp|bmp)$/i).test(file.name)) {
+      //   if (!this.isFormatDefined) {
+      //     this.format = event.target.files[0].type.split('/')[1];
+      //   }
+      //   const reader = new FileReader();
+      //   reader.onload = (ev: any) => {
+      //     this.imageUrl = ev.target.result;
+      //   };
+      //   reader.readAsDataURL(event.target.files[0]);
+      // }
     }
   }
 
@@ -258,6 +260,7 @@ export class PicsartImageEditorComponent implements OnInit{
   }
 
   handleCancel(): void {
+    this.onClose.emit(true);
     this.isVisible = false;
     this.imageLoaded = false;
   }
