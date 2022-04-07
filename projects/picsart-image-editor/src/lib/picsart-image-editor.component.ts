@@ -24,7 +24,7 @@ export class PicsartImageEditorComponent implements OnInit{
   ref: any;
   @Input() modalTitle = 'Editor';
   @Input() hideModalHeader = false;
-  @Input() aspectRatio = 1;
+  @Input() aspectRatio = NaN;
   @Input() autoCropArea = 1;
   @Input() autoCrop = true;
   @Input() mask = true;
