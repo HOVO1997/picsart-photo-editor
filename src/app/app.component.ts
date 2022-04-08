@@ -10,7 +10,7 @@ export class AppComponent {
   base64: any;
   imageChangedEvent: any;
   imageUrl: any;
-  api = '2yFftArNa4Qlqqu5t0Ahgzb5gEvFBf55';
+  api = 'irnvEfzdtHdTZ8GvmKylS9ii4U1SoQdb';
   picsartUrl = 'https://api.picsart.io/tools/demo/removebg';
   fileChangeEvent(event: any) {
     this.imageChangedEvent = event;
